@@ -1,6 +1,8 @@
 import web
 
-urls = ('/','Index')
+# urls = ('/','Index')
+urls = ('/hello', 'Index')
+
 app = web.application(urls,globals())
 render = web.template.render('templates/')
 
@@ -10,13 +12,43 @@ class Index(object):
         self.var1 = ""
 
     def GET(self):
-        greeting = "Hello World"
-        # return greeting
-        return render.index(greeting=greeting)
 
-    # def POST(self):
-    #     sampleWord = "Hi there sam!"
-    #     return sampleWord
+        # Solution 1
+        """
+            Simply displays "Hello World" in the screen
+            run python bin/app.py in the terminal (root dir)
+            type in the URL: http://localhost:8080/
+        """
+        # greeting = "Hello World"
+        # # return greeting
+        # return render.index(greeting=greeting)
+
+        # Solution 2
+        """
+            Displays Hello + name coming from URL
+            type in the URL:
+            http://localhost:8080/hello?name=Frank&greet=Hola
+        """
+        # form = web.input(name="Nobody")
+        # # greeting = "Hello, %s" % form.name
+        # greeting = "%s, %s" % (form.greet, form.name)
+        # return render.index(greeting=greeting)
+
+        # Solution 3
+        """
+            Displays greet + name coming from URL
+            type in the URL :
+            http://localhost:8080/hello?name=Frank
+            Description: displays Error message
+        """
+        form = web.input(name="Nobody", greet=None)
+        if form.greet:
+            greeting = "%s, %s" %(form.greet, form.name)
+            return render.index(greeting=greeting)
+        else:
+            return "ERROR: greet is required."
+
+
 
 if __name__ == "__main__":
     app.run()
