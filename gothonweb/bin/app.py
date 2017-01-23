@@ -39,15 +39,22 @@ class Index(object):
             Displays greet + name coming from URL
             type in the URL :
             http://localhost:8080/hello?name=Frank
-            Description: displays Error message
+            Description: (1) Displays Error message (2)
         """
-        form = web.input(name="Nobody", greet=None)
-        if form.greet:
-            greeting = "%s, %s" %(form.greet, form.name)
-            return render.index(greeting=greeting)
-        else:
-            return "ERROR: greet is required."
+        # form = web.input(name="Nobody", greet=None)
+        # if form.greet:
+        #     greeting = "%s, %s" %(form.greet, form.name)
+        #     return render.index(greeting=greeting)
+        # else:
+        #     return "ERROR: greet is required."
 
+        # Solution 4
+        return render.hello_form()
+
+    def POST(self):
+        form = web.input(name="Nobody",greet="Hello")
+        greeting = "%s , %s" % (form.greet, form.name)
+        return render.index(greeting=greeting)
 
 
 if __name__ == "__main__":
